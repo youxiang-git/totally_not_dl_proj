@@ -44,6 +44,8 @@ class Fashion_MNIST_ResNet(pl.LightningModule):
     t_loss = self.trainer.callback_metrics.get('train_loss')
     e_acc = self.acc.compute()
     e_f1 = self.f1.compute()
+    if t_loss:
+      self.log("train_loss", t_loss, prog_bar=True, logger=True)
     self.log("val_acc", e_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True)
     self.log("val_f1", e_f1, on_step=False, on_epoch=True, prog_bar=True, logger=True)
     print(f"\n\nEpoch: {self.current_epoch} - Metrics: ")
@@ -89,6 +91,8 @@ class Fashion_MNIST_MobileNet(pl.LightningModule):
     t_loss = self.trainer.callback_metrics.get('train_loss')
     e_acc = self.acc.compute()
     e_f1 = self.f1.compute()
+    if t_loss:
+      self.log("train_loss", t_loss, prog_bar=True, logger=True)
     self.log("val_acc", e_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True)
     self.log("val_f1", e_f1, on_step=False, on_epoch=True, prog_bar=True, logger=True)
     print(f"\n\nEpoch: {self.current_epoch} - Metrics: ")
@@ -98,3 +102,4 @@ class Fashion_MNIST_MobileNet(pl.LightningModule):
 
   def configure_optimizers(self):
     return optim.AdamW(self.model.parameters(), lr=1e-3)
+  
